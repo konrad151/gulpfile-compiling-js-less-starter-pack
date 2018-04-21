@@ -1,16 +1,16 @@
 # gulpfile-compiling-js-less-starter-pack
 
-##For better workflow!
-###JS:
+## For better workflow!
+### JS:
 - compile ES6
 - modules support(browserify)
 - minify JavaScript
-###LESS:
+### LESS:
 - concat
 - compile to CSS
 - minify CSS
 
-###How to:
+### How to:
 1. Write "npm install" after downloading repository in console
 2. Write "gulp" in console 
 
