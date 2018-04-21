@@ -2,6 +2,7 @@
 
 ## For better workflow!
 ### JS:
+- concat
 - compile ES6
 - modules support(browserify)
 - minify JavaScript
