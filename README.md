@@ -3,8 +3,8 @@
 ## For better workflow!
 ### JS:
 - concat
-- compile ES6
-- modules support(browserify)
+- compile ES6 (babelify)
+- modules support (browserify)
 - minify JavaScript
 ### LESS:
 - concat
