@@ -22,7 +22,8 @@ gulp.task('scripts', function() {
 	.bundle()
 	.pipe(source('index.min.js'))
 	.pipe(buffer())
-	.pipe(uglify())
+	// Comment .pipe(uglify()) below for development
+	// .pipe(uglify())
 	.pipe(gulp.dest('dist/js'))
 });
 
@@ -47,8 +48,8 @@ gulp.task('minify-css', function (callback) {
 gulp.task('less-sequence', gulpSequence('less', 'minify-css'))
 
 gulp.task('default', () =>{
-	gulp.watch('src/js/*.js', ['scripts'])
-	gulp.watch('src/less/*.less', function (event) {
+	gulp.watch('src/js/**/*.js', ['scripts'])
+	gulp.watch('src/less/**/*.less', function (event) {
 		gulpSequence('less', 'minify-css')(function (err) {
 		  if (err) console.log(err)
 		})
