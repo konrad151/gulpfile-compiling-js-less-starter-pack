@@ -14,20 +14,22 @@ var path = require('path');
 var rename = require('gulp-rename');
 var gulpSequence = require('gulp-sequence')
 
+
+
 gulp.task('scripts', function() {
 	browserify('src/js/app.js')
 	.transform('babelify', {
-		presets: ['env']
+		presets: ['@babel/preset-env']
 	})
 	.bundle()
 	.pipe(source('index.min.js'))
 	.pipe(buffer())
 	// Comment .pipe(uglify()) below for development
-	// .pipe(uglify())
+	.pipe(uglify())
 	.pipe(gulp.dest('dist/js'))
 });
 
-gulp.task('less', function (callback) {
+gulp.task('less', function () {
 	return gulp.src('src/less/*.less')
 	.pipe(less({
 		paths: [ path.join(__dirname, 'less', 'includes') ]
@@ -35,7 +37,7 @@ gulp.task('less', function (callback) {
 	.pipe(concat('index.css'))
 	.pipe(gulp.dest('dist/css'))
 });
-gulp.task('minify-css', function (callback) {
+gulp.task('minify-css', function () {
 	return gulp.src('dist/css/index.css')
 	.pipe(cleanCSS({
 		compatibility: 'ie8'
@@ -48,8 +50,8 @@ gulp.task('minify-css', function (callback) {
 gulp.task('less-sequence', gulpSequence('less', 'minify-css'))
 
 gulp.task('default', () =>{
-	gulp.watch('src/js/**/*.js', ['scripts'])
-	gulp.watch('src/less/**/*.less', function (event) {
+	gulp.watch('src/js/**/*.js', gulp.series('scripts'))
+	gulp.watch('src/less/**/*.less', function () {
 		gulpSequence('less', 'minify-css')(function (err) {
 		  if (err) console.log(err)
 		})
