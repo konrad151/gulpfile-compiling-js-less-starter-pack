@@ -12,12 +12,11 @@ var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var path = require('path');
 var rename = require('gulp-rename');
-var gulpSequence = require('gulp-sequence')
 
 
 
 gulp.task('scripts', function() {
-	browserify('src/js/app.js')
+	return browserify('src/js/app.js')
 	.transform('babelify', {
 		presets: ['@babel/preset-env']
 	})
@@ -47,13 +46,8 @@ gulp.task('minify-css', function () {
 	}))
 	.pipe(gulp.dest('dist/css'))
 });
-gulp.task('less-sequence', gulpSequence('less', 'minify-css'))
 
 gulp.task('default', () =>{
 	gulp.watch('src/js/**/*.js', gulp.series('scripts'))
-	gulp.watch('src/less/**/*.less', function () {
-		gulpSequence('less', 'minify-css')(function (err) {
-		  if (err) console.log(err)
-		})
-	  })
+	gulp.watch('src/less/**/*.less', gulp.series(gulp.parallel('less', 'minify-css')))
 });
